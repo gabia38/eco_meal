@@ -25,7 +25,7 @@ class Package
 
     #[ORM\ManyToOne(inversedBy: 'packages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?business $business = null;
+    private ?Business $business = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -38,7 +38,7 @@ class Package
     private ?Order $consumer_order = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Photo = null;
+    private ?string $photo = null;
 
     public function getId(): ?int
     {
@@ -93,6 +93,18 @@ class Package
         return $this;
     }
 
+    public function getCreated_at(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreated_at(\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
@@ -136,12 +148,12 @@ class Package
 
     public function getPhoto(): ?string
     {
-        return $this->Photo;
+        return $this->photo;
     }
 
     public function setPhoto(?string $Photo): static
     {
-        $this->Photo = $Photo;
+        $this->photo = $photo;
 
         return $this;
     }
