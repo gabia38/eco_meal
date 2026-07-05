@@ -76,6 +76,11 @@ class Consumer
         return $this;
     }
 
+    public function getFullName(): ?string
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
     /**
      * @return Collection<int, Order>
      */
