@@ -26,14 +26,17 @@
         <p>{{ business.houseNumber }}</p>
         <p>{{ business.phoneNumber }}</p>
         <p>{{ business.businessType.name }}</p>
+        <p><a href="{{ path('app_business_packages',{
+                id : business.id
+            }) }}"> view packages</a></p>
 
         <a href='{{ path('app_business_delete',{
             id:business.id
         }) }}'>delete</a>
 
-        <a href='{{ path('app_business_edit',{
-            id: business.id
-        }) }}'>edit</a>
+        <a href="{{ path('app_business_edit',{
+            id:business.id
+        }) }}">edit</a>
 
 
         <a href="{{ path("app_business") }}"> back </a>

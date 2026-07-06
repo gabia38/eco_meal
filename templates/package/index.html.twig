@@ -18,7 +18,9 @@
     </style>
 
     <div class="example-wrapper">
-        <a href="{{ path('app_package_new') }}"> Create new package</a>
+        <a href="{{ path('app_package_new',{
+            id : business.id
+        }) }}"> Create new package</a>
 
         <table>
             <thead>

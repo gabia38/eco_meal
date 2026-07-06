@@ -27,6 +27,8 @@
         <p>{{ package.created_at|date('d.m.y H:i') }}</p>
         <p>{{ package.category.name }}</p>
 
-        <a href="{{ path('app_package') }}">back</a>
+        <a href="{{ path('app_business_packages',{
+            id : package.business.id
+        }) }}">back</a>
     </div>
 {% endblock %}

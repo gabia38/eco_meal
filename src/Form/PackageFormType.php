@@ -27,10 +27,6 @@ class PackageFormType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('photo')
-            ->add('business', EntityType::class, [
-                'class' => Business::class,
-                'choice_label' => 'name',
-            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
