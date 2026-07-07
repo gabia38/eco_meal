@@ -9,18 +9,8 @@
     </style>
 
     <div class="example-wrapper">
-        <p>{{ businessType.id}}</p>
-        <p>{{ businessType.name }}</p>
-
-        <a href="{{ path('app_business_type_edit',{
-            id : businessType.id,
-        }) }}">edit</a>
-
-
-        <a href="{{ path('app_business_type_delete',{
-            id : businessType.id,
-        }) }}">delete</a>
-
-        <a href = {{ path('app_business_type') }}> back </a>
+        {{ form_start(form) }}
+            {{ form_row(form.name) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
