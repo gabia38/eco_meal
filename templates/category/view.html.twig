@@ -12,6 +12,14 @@
         <p>{{ category.id }}</p>
         <p>{{ category.name }}</p>
 
+        <a href="{{ path('app_category_edit',{
+            id : category.id,
+        }) }}">edit</a>
+
+        <a href="{{ path('app_category_delete',{
+            id : category.id,
+        }) }}">delete</a>
+
         <a href="{{ path('app_category') }}">back</a>
     </div>
 {% endblock %}
