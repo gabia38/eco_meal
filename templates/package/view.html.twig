@@ -27,8 +27,16 @@
         <p>{{ package.created_at|date('d.m.y H:i') }}</p>
         <p>{{ package.category.name }}</p>
 
+        <a href="{{ path('app_package') }}">back to all packages list</a>
         <a href="{{ path('app_business_packages',{
             id : package.business.id
-        }) }}">back</a>
+        }) }}">back to business packages list</a>
+        <a href="{{ path('app_package_edit',{
+            business_id : package.business.id,
+            id : package.id
+        }) }}">edit</a>
+        <a href="{{ path('app_package_delete',{
+            id : package.id
+        }) }}">delete</a>
     </div>
 {% endblock %}

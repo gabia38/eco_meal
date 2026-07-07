@@ -7,6 +7,7 @@ use App\Entity\Package;
 use App\Form\PackageFormType;
 use App\Repository\PackageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ final class PackageController extends AbstractController
     public function index(PackageRepository $packageRepository): Response
     {
         $packages = $packageRepository->findAll();
-        return $this->render('package/index.html.twig', [
+        return $this->render('package/all.html.twig', [
             'controller_name' => 'PackageController',
             'packages' => $packages,
         ]);
@@ -64,6 +65,42 @@ final class PackageController extends AbstractController
 
         return $this->render('package/new.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('business/{business_id}/package/edit/{id}', name: 'app_package_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, #[MapEntity(expr: 'repository.find(business_id)')] Business $business,
+                         Package $package, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PackageFormType::class, $package);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($package);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_business_packages',[
+                "id" => $business->getId(),
+            ]);
+        }
+
+        return $this->render('package/edit.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('package/delete/{id}', name: 'app_package_delete', methods: ['GET','POST'])]
+    public function delete(Request $request, int $id, PackageRepository $packageRepository, EntityManagerInterface $entityManager): Response
+    {
+        $package = $packageRepository->find($id);
+
+        $id = $package->getBusiness()->getId();
+
+        $entityManager->remove($package);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_business_packages',[
+            'id' => $id,
         ]);
     }
 }
