@@ -14,6 +14,14 @@
         <p>{{ order.consumer.fullName }}</p>
         <p>{{ order.created_at|date('d.m.y H:i') }}</p>
 
+        <a href="{{ path('app_order_edit',{
+            id : order.id,
+        }) }}">edit</a>
+
+        <a href="{{ path('app_order_delete',{
+            id : order.id,
+        }) }}">delete</a>
+
         <a href="{{ path('app_order') }}">back</a>
     </div>
 {% endblock %}
