@@ -14,14 +14,24 @@
         <p>{{ consumer.lastName }}</p>
         <p>{{ consumer.phoneNumber }}</p>
 
+        {% if is_granted('ROLE_CONSUMER') %}
         <a href="{{ path('app_consumer_edit',{
             id : consumer.id,
         }) }}">edit</a>
+        {% endif %}
 
-        <a href="{{ path('app_consumer_delete',{
-            id : consumer.id,
-        }) }}">delete</a>
+        {% if is_granted('ROLE_ADMIN')%}
+            <a href="{{ path('app_consumer_delete',{
+                id : consumer.id,
+            }) }}">delete</a>
+        {% endif %}
 
-        <a href="{{ path('app_consumer') }}">back</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_consumer') }}">back to user list</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_CONSUMER') %}
+            <a href="{{ path('app_package') }}">back to package list</a>
+        {% endif %}
     </div>
 {% endblock %}

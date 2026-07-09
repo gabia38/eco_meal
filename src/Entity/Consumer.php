@@ -30,6 +30,9 @@ class Consumer
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'consumer', orphanRemoval: true)]
     private Collection $orders;
 
+    #[ORM\OneToOne(mappedBy: 'consumer', cascade: ['persist', 'remove'])]
+    private ?User $business = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -107,6 +110,28 @@ class Consumer
                 $order->setConsumer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBusiness(): ?User
+    {
+        return $this->business;
+    }
+
+    public function setBusiness(?User $business): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($business === null && $this->business !== null) {
+            $this->business->setConsumer(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($business !== null && $business->getConsumer() !== $this) {
+            $business->setConsumer($this);
+        }
+
+        $this->business = $business;
 
         return $this;
     }
