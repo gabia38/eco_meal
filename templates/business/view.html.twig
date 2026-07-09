@@ -33,9 +33,7 @@
         <a href='{{ path('app_business_delete',{
             id:business.id
         }) }}'>delete</a>
-        {% endif %}
 
-        {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_business_edit',{
             id:business.id
         }) }}">edit</a>

@@ -28,6 +28,17 @@ final class PackageController extends AbstractController
     #[Route('/business/{id}/packages', name: 'app_business_packages', methods: ['GET'])]
     public function showBusinessPackages(PackageRepository $packageRepository, Business $business): Response
     {
+        $thisBusiness = $this->getUser()->getBusiness();
+        if ($thisBusiness !== null && $thisBusiness !== $business) {
+            $packages = $packageRepository->findBy(['business' => $thisBusiness]);
+
+            return $this->render('package/index.html.twig', [
+                'controller_name' => 'PackageController',
+                'packages' => $packages,
+                'business' => $thisBusiness,
+            ]);
+        }
+
         $packages = $packageRepository->findBy(['business' => $business]);
         return $this->render('package/index.html.twig', [
             'controller_name' => 'PackageController',
@@ -40,6 +51,13 @@ final class PackageController extends AbstractController
     public function view(int $id, PackageRepository $packageRepository): Response
     {
         $package = $packageRepository->find($id);
+
+        $thisBusiness = $this->getUser()->getBusiness();
+        if ($thisBusiness !== null && $package->getBusiness() !== $thisBusiness) {
+            return $this->redirectToRoute('app_business_packages', [
+                'id' => $this->getUser()->getBusiness()->getId(),
+            ]);
+        }
         return $this->render('package/view.html.twig', [
             'package' => $package,
         ]);
@@ -48,6 +66,13 @@ final class PackageController extends AbstractController
     #[Route('business/{id}/new/package', name: 'app_package_new', methods: ['GET', 'POST'])]
     public function new(Business $business, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $thisBusiness = $this->getUser()->getBusiness();
+        if ($thisBusiness !== null && $business !== $thisBusiness) {
+            return $this->redirectToRoute('app_business_packages', [
+                'id' => $this->getUser()->getBusiness()->getId(),
+            ]);
+        }
+
         $package = new Package();
 
         $form = $this->createForm(PackageFormType::class, $package);
@@ -58,7 +83,7 @@ final class PackageController extends AbstractController
             $entityManager->persist($package);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_business_packages',[
+            return $this->redirectToRoute('app_business_packages', [
                 "id" => $business->getId(),
             ]);
         }
@@ -72,6 +97,13 @@ final class PackageController extends AbstractController
     public function edit(Request $request, #[MapEntity(expr: 'repository.find(business_id)')] Business $business,
                          Package $package, EntityManagerInterface $entityManager): Response
     {
+        $thisBusiness = $this->getUser()->getBusiness();
+        if ($thisBusiness !== null && $package->getBusiness() !== $thisBusiness) {
+            return $this->redirectToRoute('app_business_packages', [
+                'id' => $this->getUser()->getBusiness()->getId(),
+            ]);
+        }
+
         $form = $this->createForm(PackageFormType::class, $package);
         $form->handleRequest($request);
 
@@ -79,7 +111,7 @@ final class PackageController extends AbstractController
             $entityManager->persist($package);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_business_packages',[
+            return $this->redirectToRoute('app_business_packages', [
                 "id" => $business->getId(),
             ]);
         }
@@ -89,17 +121,24 @@ final class PackageController extends AbstractController
         ]);
     }
 
-    #[Route('package/delete/{id}', name: 'app_package_delete', methods: ['GET','POST'])]
+    #[Route('package/delete/{id}', name: 'app_package_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, int $id, PackageRepository $packageRepository, EntityManagerInterface $entityManager): Response
     {
         $package = $packageRepository->find($id);
+
+        $thisBusiness = $this->getUser()->getBusiness();
+        if ($thisBusiness !== null && $package->getBusiness() !== $thisBusiness) {
+            return $this->redirectToRoute('app_business_packages', [
+                'id' => $this->getUser()->getBusiness()->getId(),
+            ]);
+        }
 
         $id = $package->getBusiness()->getId();
 
         $entityManager->remove($package);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_business_packages',[
+        return $this->redirectToRoute('app_business_packages', [
             'id' => $id,
         ]);
     }

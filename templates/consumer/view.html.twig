@@ -24,9 +24,7 @@
             <a href="{{ path('app_consumer_delete',{
                 id : consumer.id,
             }) }}">delete</a>
-        {% endif %}
 
-        {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('app_consumer') }}">back to user list</a>
         {% endif %}
 
