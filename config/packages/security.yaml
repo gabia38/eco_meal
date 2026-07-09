@@ -34,9 +34,13 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-         - { path: ^/consumer/\d+$, roles: [ROLE_ADMIN, ROLE_CONSUMER] }
-         - { path: ^/consumer/edit/\d+$, roles:[ROLE_CONSUMER] }
-         - { path: ^/consumer, roles: ROLE_ADMIN }
+        - { path: ^/business/\d+$, roles:[ROLE_ADMIN, ROLE_CONSUMER, ROLE_BUSINESS]}
+        - { path: ^/business/edit/\d+$, roles:[ROLE_ADMIN]}
+        - { path: ^/business/delete, roles:[ROLE_ADMIN]}
+        - { path: ^/business, roles:[ROLE_ADMIN, ROLE_CONSUMER]}
+        - { path: ^/consumer/\d+$, roles: [ROLE_ADMIN, ROLE_CONSUMER] }
+        - { path: ^/consumer/edit/\d+$, roles:[ROLE_CONSUMER] }
+        - { path: ^/consumer, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Consumer;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\UserRegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -13,16 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-class RegistrationController extends AbstractController
+class UserRegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route('/userRegister', name: 'app_user_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $consumer = new Consumer();
         $user->setConsumer($consumer);
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(UserRegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
             return $security->login($user, 'App\Security\LoginFormAuthenticator', 'main');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('registration/userRegister.html.twig', [
             'registrationForm' => $form,
         ]);
     }

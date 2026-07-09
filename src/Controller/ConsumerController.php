@@ -35,6 +35,10 @@ final class ConsumerController extends AbstractController
                 'consumer' => $consumer,
             ]);
         }
+
+        return $this->render('consumer/view.html.twig', [
+            'consmer' => $user->getConsumer(),
+        ]);
     }
 
     #[Route('new/consumer', name: 'app_consumer_new', methods: ['GET', 'POST'])]

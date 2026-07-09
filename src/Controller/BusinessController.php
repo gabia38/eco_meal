@@ -29,29 +29,41 @@ final class BusinessController extends AbstractController
     public function view(int $id, BusinessRepository $businessRepository): Response
     {
         $business = $businessRepository->find($id);
+
+        if ($this->getUser()->getBusiness() !== null && $this->getUser()->getBusiness() !== $business) {
+            return $this->render('business/view.html.twig', [
+                'business' => $this->getUser()->getBusiness(),
+            ]);
+        }
         return $this->render('business/view.html.twig', [
             'business' => $business,
         ]);
+
+
     }
 
     #[Route('/new/business', name: 'app_business_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $business = new Business();
+        if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            $business = new Business();
 
-        $form = $this->createForm(BusinessFormType::class, $business);
-        $form = $form->handleRequest($request);
+            $form = $this->createForm(BusinessFormType::class, $business);
+            $form = $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($business);
-            $entityManager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($business);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_business');
+                return $this->redirectToRoute('app_business');
+            }
+
+            return $this->render('business/new.html.twig', [
+                'form' => $form,
+            ]);
         }
 
-        return $this->render('business/new.html.twig', [
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/business/edit/{id}', name: 'app_business_edit', methods: ['GET', 'POST'])]
@@ -69,6 +81,8 @@ final class BusinessController extends AbstractController
         return $this->render('business/edit.html.twig', [
             'form' => $form,
         ]);
+
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/business/delete/{id}', name: 'app_business_delete', methods: ['GET', 'POST'])]

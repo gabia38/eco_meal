@@ -18,7 +18,9 @@
     </style>
 
     <div class="example-wrapper">
-        <a href="{{ path ('app_business_new') }}"> Create new business</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path ('app_business_register') }}"> Create new business</a>
+        {% endif %}
 
         <table>
             <thead>

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationFormType extends AbstractType
+class BusinessRegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -43,7 +43,7 @@ class RegistrationFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('consumer', ConsumerFormType::class,[
+            ->add('business',BusinessFormType::class,[
                 'label' => false,
             ])
         ;

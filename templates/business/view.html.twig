@@ -21,7 +21,6 @@
         <p>{{ business.id }}</p>
         <p>{{ business.name }}</p>
         <p>{{ business.city }}</p>
-        <p>{{ business.city }}</p>
         <p>{{ business.street }}</p>
         <p>{{ business.houseNumber }}</p>
         <p>{{ business.phoneNumber }}</p>
@@ -30,14 +29,17 @@
                 id : business.id
             }) }}"> view packages</a></p>
 
+        {%  if is_granted('ROLE_ADMIN') %}
         <a href='{{ path('app_business_delete',{
             id:business.id
         }) }}'>delete</a>
+        {% endif %}
 
+        {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_business_edit',{
             id:business.id
         }) }}">edit</a>
-
+        {% endif %}
 
         <a href="{{ path("app_business") }}"> back </a>
     </div>
