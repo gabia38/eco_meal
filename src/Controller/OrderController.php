@@ -17,7 +17,19 @@ final class OrderController extends AbstractController
     #[Route('/order', name: 'app_order')]
     public function index(OrderRepository $orderRepository): Response
     {
-        $orders = $orderRepository->findAll();
+        $consumer = $this->getUser()->getConsumer();
+        if ($consumer !== null) {
+            $orders = $orderRepository->findBy(['consumer' => $consumer]);
+        } else {
+            $business = $this->getUser()->getBusiness();
+
+            if ($business !== null) {
+                $orders = $orderRepository->findBy(['business' => $business]);
+            } else {
+                $orders = $orderRepository->findAll();
+            }
+        }
+
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
             'orders' => $orders,

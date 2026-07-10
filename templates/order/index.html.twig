@@ -32,23 +32,13 @@
             </tr>
             </thead>
             {% for order in orders %}
-                {% set  hasAccess = false %}
-                {% if is_granted('ROLE_CONSUMER') and app.user.consumer == order.consumer %}
-                    {% set hasAccess = true %}
-                {% elseif is_granted('ROLE_BUSINESS') and app.user.business == order.package.business %}
-                    {% set hasAccess = true %}
-                {% elseif is_granted('ROLE_ADMIN') %}
-                    {% set hasAcces = true %}
-                {% endif %}
                 <tr>
-                    {% if hasAccess %}
-                        <td><a href="{{ path('app_order_view',{
-                                id : order.id,
-                            }) }}"> {{ order.id }}</a></td>
-                        <td>{{ order.package.name }}</td>
-                        <td>{{ order.consumer.fullName }}</td>
-                        <td>{{ order.created_at|date('d.m.y H:i') }}</td>
-                    {% endif %}
+                    <td><a href="{{ path('app_order_view',{
+                            id : order.id,
+                        }) }}"> {{ order.id }}</a></td>
+                    <td>{{ order.package.name }}</td>
+                    <td>{{ order.consumer.fullName }}</td>
+                    <td>{{ order.created_at|date('d.m.y H:i') }}</td>
                 </tr>
             {% endfor %}
         </table>
