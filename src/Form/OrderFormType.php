@@ -24,11 +24,15 @@ class OrderFormType extends AbstractType
             ->add('consumer', EntityType::class, [
                 'class' => Consumer::class,
                 'choice_label' => 'fullName',
+
+                'disabled' => true,
             ])
             ->add('created_at',DateTimeType::class, [
                 'input' => 'datetime_immutable',
 
                 'widget' => 'single_text',
+
+                'disabled' => true,
             ])
             ->add('submit', SubmitType::class);
     }
