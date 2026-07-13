@@ -39,10 +39,9 @@ security:
         - { path: ^/order/edit/\d+$, roles: [ROLE_CONSUMER]}
         - { path: ^/package/delete/\d+$, roles: [ ROLE_BUSINESS ] }
         - { path: ^/package/\d+$, roles: [ ROLE_USER ] }
-        - { path: ^/package, roles: [ ROLE_ADMIN, ROLE_CONSUMER ] }
+        - { path: ^/package, roles: [ ROLE_USER ] }
         - { path: ^/business/\d+/package/edit/\d+$, roles: [ ROLE_BUSINESS ] }
         - { path: ^/business/\d+/new/package, roles: [ ROLE_BUSINESS ] }
-        - { path: ^/business/\d+/packages, roles: [ ROLE_USER ] }
         - { path: ^/business/\d+$, roles: [ ROLE_USER ] }
         - { path: ^/business/edit/\d+$, roles: [ ROLE_ADMIN ] }
         - { path: ^/business/delete, roles: [ ROLE_ADMIN ] }

@@ -18,40 +18,29 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PackageController extends AbstractController
 {
     #[Route('/package', name: 'app_package')]
-    public function index(Request $request, PackageRepository $packageRepository): Response
+    public function index(Request $request, PackageRepository $packageRepository, EntityManagerInterface $entityManager): Response
     {
         $filter = new PackageSearchFilter();
+
+        $thisBusiness = $this->getUser()->getBusiness();
+        if ($thisBusiness !== null) {
+            $filter->setBusiness($thisBusiness);
+        } else {
+            $businessId = $request->query->get('id');
+
+            if ($businessId !== null) {
+                $business = $entityManager->getRepository(Business::class)->find($businessId);
+                $filter->setBusiness($business);
+            }
+        }
 
         $form = $this->createForm(PackageFiltersType::class, $filter);
         $form->handleRequest($request);
 
-        $packages = $packageRepository->findAll();
         return $this->render('package/all.html.twig', [
             'controller_name' => 'PackageController',
             'packages' => $packageRepository->findByFilter($filter),
             'package_filter_form' => $form->createView(),
-        ]);
-    }
-
-    #[Route('/business/{id}/packages', name: 'app_business_packages', methods: ['GET'])]
-    public function showBusinessPackages(PackageRepository $packageRepository, Business $business): Response
-    {
-        $thisBusiness = $this->getUser()->getBusiness();
-        if ($thisBusiness !== null && $thisBusiness !== $business) {
-            $packages = $packageRepository->findBy(['business' => $thisBusiness]);
-
-            return $this->render('package/index.html.twig', [
-                'controller_name' => 'PackageController',
-                'packages' => $packages,
-                'business' => $thisBusiness,
-            ]);
-        }
-
-        $packages = $packageRepository->findBy(['business' => $business]);
-        return $this->render('package/index.html.twig', [
-            'controller_name' => 'PackageController',
-            'packages' => $packages,
-            'business' => $business,
         ]);
     }
 
@@ -62,7 +51,7 @@ final class PackageController extends AbstractController
 
         $thisBusiness = $this->getUser()->getBusiness();
         if ($thisBusiness !== null && $package->getBusiness() !== $thisBusiness) {
-            return $this->redirectToRoute('app_business_packages', [
+            return $this->redirectToRoute('app_package', [
                 'id' => $this->getUser()->getBusiness()->getId(),
             ]);
         }
@@ -76,7 +65,7 @@ final class PackageController extends AbstractController
     {
         $thisBusiness = $this->getUser()->getBusiness();
         if ($thisBusiness !== null && $business !== $thisBusiness) {
-            return $this->redirectToRoute('app_business_packages', [
+            return $this->redirectToRoute('app_package', [
                 'id' => $this->getUser()->getBusiness()->getId(),
             ]);
         }
@@ -91,9 +80,7 @@ final class PackageController extends AbstractController
             $entityManager->persist($package);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_business_packages', [
-                "id" => $business->getId(),
-            ]);
+            return $this->redirectToRoute('app_package');
         }
 
         return $this->render('package/new.html.twig', [
@@ -107,9 +94,7 @@ final class PackageController extends AbstractController
     {
         $thisBusiness = $this->getUser()->getBusiness();
         if ($thisBusiness !== null && $package->getBusiness() !== $thisBusiness) {
-            return $this->redirectToRoute('app_business_packages', [
-                'id' => $this->getUser()->getBusiness()->getId(),
-            ]);
+            return $this->redirectToRoute('app_package');
         }
 
         $form = $this->createForm(PackageFormType::class, $package);
@@ -119,9 +104,7 @@ final class PackageController extends AbstractController
             $entityManager->persist($package);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_business_packages', [
-                "id" => $business->getId(),
-            ]);
+            return $this->redirectToRoute('app_package');
         }
 
         return $this->render('package/edit.html.twig', [
@@ -136,9 +119,7 @@ final class PackageController extends AbstractController
 
         $thisBusiness = $this->getUser()->getBusiness();
         if ($thisBusiness !== null && $package->getBusiness() !== $thisBusiness) {
-            return $this->redirectToRoute('app_business_packages', [
-                'id' => $this->getUser()->getBusiness()->getId(),
-            ]);
+            return $this->redirectToRoute('app_package');
         }
 
         $id = $package->getBusiness()->getId();
@@ -146,8 +127,6 @@ final class PackageController extends AbstractController
         $entityManager->remove($package);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_business_packages', [
-            'id' => $id,
-        ]);
+        return $this->redirectToRoute('app_package');
     }
 }

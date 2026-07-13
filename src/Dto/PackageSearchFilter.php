@@ -11,6 +11,8 @@ class PackageSearchFilter
 
     private ?int $maxPrice = null;
 
+    private ?Business $business = null;
+
     public function getName(): ?string
     {
         return $this->name;
@@ -52,6 +54,17 @@ class PackageSearchFilter
     public function setMaxPrice(int $maxPrice): self
     {
         $this->maxPrice = $maxPrice;
+        return $this;
+    }
+
+    public function getBusiness(): ?Business
+    {
+        return $this->business;
+    }
+
+    public function setBusiness(?Business $business): self
+    {
+        $this->business = $business;
         return $this;
     }
 

@@ -8,6 +8,7 @@ use App\Entity\Order;
 use App\Entity\Package;
 use App\Entity\PackageSearchFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -17,17 +18,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PackageFiltersType extends AbstractType
 {
+
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', SearchType::class, [
                 'required' => false,
-                'label' => 'name',
+                'label' => 'Name',
             ])
             ->add('minPrice', NumberType::class, [
                 'required' => false,
                 'label' => 'Min price',
-                ])
+            ])
             ->add('maxPrice', NumberType::class, [
                 'required' => false,
                 'label' => 'Max price',
@@ -36,11 +45,19 @@ class PackageFiltersType extends AbstractType
                 'required' => false,
                 'class' => Category::class,
                 'choice_label' => 'name',
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Filter',
-            ])
-            ;
+            ]);
+
+        if (!$this->security->isGranted('ROLE_BUSINESS')) {
+            $builder->add('business', EntityType::class, [
+                'required' => false,
+                'class' => Business::class,
+                'choice_label' => 'name',
+                'label' => 'Business',
+            ]);
+        }
+        $builder->add('submit', SubmitType::class, [
+            'label' => 'Filter',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

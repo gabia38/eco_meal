@@ -19,8 +19,16 @@
 
     <div class="example-wrapper">
 
-        {{ form(package_filter_form) }}
-
+        {{ form_start(package_filter_form) }}
+            {{ form_row(package_filter_form.name) }}
+            {{ form_row(package_filter_form.minPrice) }}
+            {{ form_row(package_filter_form.maxPrice) }}
+            {{ form_row(package_filter_form.category) }}
+            {% if package_filter_form.business is defined %}
+                {{ form_row(package_filter_form.business) }}
+            {% endif %}
+            {{ form_row(package_filter_form.submit) }}
+        {{ form_end(package_filter_form) }}
 
         <table>
             <thead>

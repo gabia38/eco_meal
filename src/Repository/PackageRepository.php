@@ -72,6 +72,12 @@ class PackageRepository extends ServiceEntityRepository
                 ->setParameter('maxPrice', $maxPrice);
         }
 
+        $business = $filter->getBusiness();
+        if ($business) {
+            $qb->andWhere("p.business IN (:business)")
+                ->setParameter('business', $business);
+        }
+
         return $qb->getQuery()->getResult();
     }
 }

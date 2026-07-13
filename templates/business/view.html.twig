@@ -25,8 +25,8 @@
         <p>{{ business.houseNumber }}</p>
         <p>{{ business.phoneNumber }}</p>
         <p>{{ business.businessType.name }}</p>
-        <p><a href="{{ path('app_business_packages',{
-                id : business.id
+        <p><a href="{{ path('app_package',{
+                id : business.id,
             }) }}"> view packages</a></p>
 
         {%  if is_granted('ROLE_ADMIN') %}
