@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Business;
-use App\Entity\BusinessType;
+use App\Dto\Business;
+use App\Dto\BusinessType;
 use App\Form\BusinessFormType;
 use App\Repository\BusinessRepository;
 use Doctrine\ORM\EntityManagerInterface;

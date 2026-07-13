@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Consumer;
+use App\Dto\Consumer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;

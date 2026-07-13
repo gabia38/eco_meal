@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\BusinessType;
+use App\Dto\BusinessType;
 use App\Form\BusinessFormType;
 use App\Form\BusinessTypeFormType;
 use App\Repository\BusinessTypeRepository;

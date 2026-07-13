@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Consumer;
-use App\Entity\Order;
-use App\Entity\Package;
+use App\Dto\Consumer;
+use App\Dto\Order;
+use App\Dto\Package;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;

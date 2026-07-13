@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Business;
-use App\Entity\Consumer;
-use App\Entity\User;
+use App\Dto\Business;
+use App\Dto\Consumer;
+use App\Dto\User;
 use App\Repository\BusinessRepository;
 use App\Repository\ConsumerRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Business;
-use App\Entity\User;
+use App\Dto\Business;
+use App\Dto\User;
 use App\Form\BusinessRegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

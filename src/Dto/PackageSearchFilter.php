@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Dto;
+
+use App\Entity\Business;
+use App\Entity\Category;
 
 class PackageSearchFilter
 {
