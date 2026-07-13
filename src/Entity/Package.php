@@ -153,7 +153,7 @@ class Package
 
     public function setPhoto(?string $Photo): static
     {
-        $this->photo = $photo;
+        $this->photo = $Photo;
 
         return $this;
     }
