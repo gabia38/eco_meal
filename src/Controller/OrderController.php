@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Dto\Order;
+use App\Entity\Order;
 use App\Form\OrderFormType;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;

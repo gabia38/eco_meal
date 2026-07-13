@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Dto\Consumer;
+use App\Entity\Consumer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

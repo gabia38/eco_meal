@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Dto\BusinessType;
+use App\Entity\BusinessType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Dto\Business;
-use App\Dto\Package;
+use App\Entity\Business;
+use App\Entity\Package;
 use App\Dto\PackageSearchFilter;
 use App\Form\PackageFiltersType;
 use App\Form\PackageFormType;

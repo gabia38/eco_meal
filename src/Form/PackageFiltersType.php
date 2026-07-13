@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Dto\Business;
-use App\Dto\Category;
-use App\Dto\Order;
-use App\Dto\Package;
+use App\Entity\Business;
+use App\Entity\Category;
+use App\Entity\Order;
+use App\Entity\Package;
 use App\Dto\PackageSearchFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;

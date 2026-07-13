@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Dto\Business;
-use App\Dto\BusinessType;
+use App\Entity\Business;
+use App\Entity\BusinessType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

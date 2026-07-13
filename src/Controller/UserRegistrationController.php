@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Dto\Consumer;
-use App\Dto\User;
+use App\Entity\Consumer;
+use App\Entity\User;
 use App\Form\UserRegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Dto\Consumer;
+use App\Entity\Consumer;
 use App\Form\ConsumerFormType;
 use App\Repository\ConsumerRepository;
 use Doctrine\ORM\EntityManagerInterface;

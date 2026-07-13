@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Dto\Business;
-use App\Dto\BusinessType;
-use App\Dto\Category;
-use App\Dto\Consumer;
-use App\Dto\Order;
-use App\Dto\Package;
+use App\Entity\Business;
+use App\Entity\BusinessType;
+use App\Entity\Category;
+use App\Entity\Consumer;
+use App\Entity\Order;
+use App\Entity\Package;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

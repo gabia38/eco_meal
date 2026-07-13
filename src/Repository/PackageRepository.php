@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Dto\Package;
+use App\Entity\Package;
 use App\Dto\PackageSearchFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
