@@ -54,6 +54,14 @@
             .password-requirements li.invalid::before { content: "✖  "; }
             .password-requirements li.valid { color: #28a745; }
             .password-requirements li.valid::before { content: "✔  "; }
+
+            .filter-wrapper .package-filter-form {
+                display: none;
+            }
+
+            .filter-wrapper.is-open .package-filter-form {
+                display: flex;
+            }
         </style>
     {% endblock %}
 
@@ -112,6 +120,27 @@
                             }
                         }
                     });
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                // Check if the user specifically clicked a filter toggle button
+                if (event.target.matches('.filter-toggle-button')) {
+                    const button = event.target;
+
+                    // Find the closest parent wrapper container
+                    const wrapper = button.closest('.filter-wrapper');
+                    if (!wrapper) return;
+
+                    // Toggle the visibility layout class
+                    const isOpen = wrapper.classList.toggle('is-open');
+
+                    // Dynamically rewrite the text label on the fly
+                    if (isOpen) {
+                        button.textContent = 'Hide';
+                    } else {
+                        button.textContent = 'Advanced Search';
+                    }
                 }
             });
         </script>
