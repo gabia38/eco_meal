@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Business;
 use App\Entity\Package;
 use App\Dto\PackageSearchFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -55,7 +56,7 @@ class PackageRepository extends ServiceEntityRepository
         }
 
         $category = $filter->getCategory();
-        if($category) {
+        if ($category) {
             $qb->andWhere("c.id = :category")
                 ->setParameter('category', $category);
         }
@@ -79,5 +80,24 @@ class PackageRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function reducePrices(): int
+    {
+        return $this->createQueryBuilder('p')
+            ->update()
+            ->set('p.price', 'p.price * 0.9')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function deletePackagesByBusinesses(array $businesses): int
+    {
+        return $this->createQueryBuilder('p')
+            ->delete()
+            ->where('p.business IN (:businesses)')
+            ->setParameter('businesses', $businesses)
+            ->getQuery()
+            ->execute();
     }
 }

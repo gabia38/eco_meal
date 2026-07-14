@@ -6,6 +6,7 @@ use App\Repository\BusinessRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Clock\DatePoint;
 
 #[ORM\Entity(repositoryClass: BusinessRepository::class)]
 class Business
@@ -41,6 +42,9 @@ class Business
 
     #[ORM\OneToOne(mappedBy: 'business', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column(type: 'time_point')]
+    private ?DatePoint $closing_time = null;
 
     public function __construct()
     {
@@ -172,6 +176,18 @@ class Business
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getClosingTime(): ?DatePoint
+    {
+        return $this->closing_time;
+    }
+
+    public function setClosingTime(DatePoint $closing_time): static
+    {
+        $this->closing_time = $closing_time;
 
         return $this;
     }

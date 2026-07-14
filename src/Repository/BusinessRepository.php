@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Business;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @extends ServiceEntityRepository<Business>
@@ -40,4 +41,14 @@ class BusinessRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByClosingTimeInterval(DatePoint $start, DatePoint $end): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.closing_time BETWEEN :start AND :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
 }
