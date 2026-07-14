@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% import '_macros.html.twig' as macros %}
 {% block title %}Register{% endblock %}
 
 {% block body %}
@@ -9,15 +9,19 @@
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
         {{ form_row(registrationForm.business.name) }}
         {{ form_row(registrationForm.business.city) }}
         {{ form_row(registrationForm.business.street) }}
         {{ form_row(registrationForm.business.houseNumber) }}
         {{ form_row(registrationForm.business.phoneNumber) }}
         {{ form_row(registrationForm.business.businessType) }}
+        <div class="form-group password-group">
+            {{ form_label(registrationForm.plainPassword, 'Password') }}
+            {{ form_errors(registrationForm.plainPassword) }}
+            {{ form_widget(registrationForm.plainPassword) }}
+
+            {{ macros.password_checklist() }}
+        </div>
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>

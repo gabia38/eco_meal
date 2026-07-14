@@ -1,0 +1,9 @@
+{% macro password_checklist() %}
+    <ul class="password-requirements">
+        <li data-criterion="length" class="invalid">At least 8 characters</li>
+        <li data-criterion="upper" class="invalid">At least 1 uppercase letter</li>
+        <li data-criterion="lower" class="invalid">At least 1 lowercase letter</li>
+        <li data-criterion="number" class="invalid">At least 1 number</li>
+        <li data-criterion="special" class="invalid">At least 1 special character</li>
+    </ul>
+{% endmacro %}
